@@ -8,7 +8,15 @@
         crossorigin="anonymous">
     <script src="https://use.fontawesome.com/cb42629f50.js"></script>
     <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
+<style>
+    #newFriendImg {
+        width: 100%;
+    }
+</style>
 
 <body>
     <div class="container">
@@ -277,13 +285,35 @@
         <br>
         <div class="form-group">
             <div>
-                <button type="submit" id="submit" class="btn btn-primary btn-lg btn-block">
+                <button type="button" id="submit" class="btn btn-info btn-primary btn-lg btn-block" data-toggle="modal" data-target="#myModal">
                     <i class="fa fa-check-circle" aria-hidden="true"></i>
                     Submit Survey
                 </button>
             </div>
         </div>
         <br>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Introducing your new bestie...</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3 id="newFriendName">Name: </h3>
+                        <img id="newFriendImg" src="https://i.pinimg.com/originals/47/d1/a9/47d1a950d2c3515084523675aecad5de.jpg">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
 
         <footer class="footer">
@@ -302,29 +332,28 @@
 <script type="text/javascript">
 
     $("#submit").on("click", function (event) {
-
         event.preventDefault();
 
+        // Save user answers for Questions 1-10
         var radioAnswers = [];
-
         for (var i = 1; i <= 10; i++) {
             oneAnswer = $("#Q" + i + " input:checked").val();
             radioAnswers.push(oneAnswer);
         }
 
-        // Here we grab the form elements
+        // Grab user input for name, photo, and scores
         var newFriend = {
             "name": $("#name").val(),
             "photo": $("#image").val(),
             "scores": radioAnswers
         };
 
-        console.log(newFriend);
-
+        // When post, logic for new bestie, target ids in the modal, then push new user to friend array
         $.post("/api/friends", newFriend,
             function (data) {
                 if (data) {
-                    alert("Here's your new bestie...");
+                    $("#newFriendName").text(data.name);
+                    $("#newFriendImg").attr("src", data.photo);
                 }
                 else {
                     alert("Sorry, an error occured.");

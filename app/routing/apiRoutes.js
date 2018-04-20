@@ -4,22 +4,33 @@
 
 // A POST routes /api/friends. This will be used to handle incoming survey results. This route will also be used to handle the compatibility logic.
 
-// Got this from apiRoutes from Hot Restaurant
 var friendArray = require("../data/friends");
 
-// Got this from apiRoutes from HotRestaurant
+
 module.exports = function (app) {
 
-    // Got both of these from apiRoutes.js from HotRestaurant
+
     app.get("/api/friends", function (req, res) {
         res.json(friendArray);
     });
 
     app.post("/api/friends", function (req, res) {
-        // Not 100% sure about req.body
+        var difArray = [];
+        var sorted = [];
+        for (var i = 0; i < friendArray.length; i++) {
+            var runningScore = 0;
+            for (var j = 0; j < 10; j++) {
+                var dif = Math.abs(parseInt(friendArray[i].scores[j]) - parseInt(req.body.scores[j]));
+                runningScore = parseInt(runningScore) + parseInt(dif);
+            }
+            difArray.push(runningScore);
+            sorted.push(runningScore);
+        }
+        sorted.sort(function (a, b) { return a - b });
+        var smallestDif = sorted[0];
+        var indexSmallest = difArray.indexOf(smallestDif);
+        res.json(friendArray[indexSmallest]);
         friendArray.push(req.body);
-        // res.json(friendArray);
-        // res.json(req.body);
     });
 
 };

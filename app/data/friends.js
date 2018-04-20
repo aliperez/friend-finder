@@ -5,11 +5,11 @@ var friendArray = [
         "name": "Bob",
         "photo": "https://media.gq.com/photos/57e5755b9c577e122a48a863/3:2/w_880/Unknown.jpeg",
         "scores": [
-            10,
-            9,
-            8,
-            7,
-            6,
+            5,
+            4,
+            3,
+            2,
+            1,
             5,
             4,
             3,
@@ -26,11 +26,27 @@ var friendArray = [
             3,
             4,
             5,
-            6,
-            7,
-            8,
-            9,
-            10
+            1,
+            2,
+            3,
+            4,
+            5
+        ]
+    },
+    {
+        "name": "Louise",
+        "photo": "https://i.pinimg.com/originals/47/d1/a9/47d1a950d2c3515084523675aecad5de.jpg",
+        "scores": [
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5,
+            5
         ]
     }
 ]
